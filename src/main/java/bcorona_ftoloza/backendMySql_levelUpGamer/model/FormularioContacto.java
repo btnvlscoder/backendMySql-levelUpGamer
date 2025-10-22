@@ -1,30 +1,31 @@
 package bcorona_ftoloza.backendMySql_levelUpGamer.model;
 
-import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Rol {
+@Table(name = "formularios_contacto")
+public class FormularioContacto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nombre; // "ESTUDIANTE DUOC", "ESTANDAR", "ADMIN", "GERENTE"
-    private String descripcion;
+    private String asunto;
+    private String mensaje;
+    private String fechaEnvio;
+    private String estado;
 
-    @OneToMany(mappedBy = "rol")
-    @JsonBackReference
-    private List<Usuario> usuarios; 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }
