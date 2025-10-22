@@ -26,5 +26,4 @@ public class RegionService {
     public List<Region> listar() {
         return regionRepository.findAll();
     }
-
 }
