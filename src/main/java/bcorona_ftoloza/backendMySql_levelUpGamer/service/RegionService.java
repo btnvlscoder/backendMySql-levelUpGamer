@@ -23,7 +23,7 @@ public class RegionService {
         }
     }
 
-    public List<Region> listar() {
+    public List<Region> listarRegion() {
         return regionRepository.findAll();
     }
 }

@@ -8,13 +8,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,13 +25,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "usuarios")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
     private String email;
     private String password;
     @JsonFormat(pattern="dd-MM-yyyy 00:00:00")
     private LocalDate fechaRegistro;
-    @OneToOne
+    private Boolean activo; //  ---> activo o inactivo
+
+    @ManyToOne
     @JoinColumn(name = "persona_id")
     private Persona persona;
     @ManyToOne
@@ -46,8 +44,7 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "direccion_id") 
     private Direccion direccion;
-
-
+    
 
     @PrePersist
     public void setFechaRegistro() {

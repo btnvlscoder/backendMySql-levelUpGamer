@@ -19,13 +19,13 @@ public class RegionController {
     private RegionService regionService;
     @GetMapping("/listar")
     public List<Region> listarRegiones() {
-        return regionService.listar();
+        return regionService.listarRegion();
     }
-    @PostMapping("/agregarRegion")
+    @PostMapping("/agregar")
     public void agregarRegion(@RequestBody Region region) {
         regionService.agregarRegion(region);
     }
-    @PostMapping("/agregarListaRegion")
+    @PostMapping("/agregarLista")
     public void agregarRegion(@RequestBody List<Region> regiones) {
         for (Region region : regiones) {
             regionService.agregarRegion(region);

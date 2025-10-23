@@ -30,6 +30,5 @@ public class Region {
     @JsonIgnore
     private List<Comuna> comunas;
     
-
 }
 
