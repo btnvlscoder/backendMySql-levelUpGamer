@@ -3,6 +3,7 @@ package bcorona_ftoloza.backendMySql_levelUpGamer.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,13 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public UsuarioDTO validarCredenciales(@RequestBody LoginDTO dto) {
-        return usuarioService.validarCredenciales(dto);
+    public ResponseEntity<?> validarCredenciales(@RequestBody LoginDTO dto) { 
+        UsuarioDTO usuario = usuarioService.validarCredenciales(dto);
+        
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email o contraseña incorrectos");
+        }
     }
 }

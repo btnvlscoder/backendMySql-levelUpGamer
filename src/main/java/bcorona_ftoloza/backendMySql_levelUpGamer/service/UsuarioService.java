@@ -102,7 +102,7 @@ public class UsuarioService {
         
             return usuarioDTO;
         } else {
-            return new UsuarioDTO();
+            return null;
         } 
     }
 }
