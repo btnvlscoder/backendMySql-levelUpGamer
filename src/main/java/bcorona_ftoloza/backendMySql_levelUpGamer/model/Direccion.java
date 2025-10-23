@@ -30,10 +30,10 @@ public class Direccion {
     private String numero;
     private String referencia;
     private boolean esPrincipal;
-
     @ManyToOne
     @JoinColumn(name = "comuna_id") 
     private Comuna comuna;
+    
     @OneToMany(mappedBy = "direccion", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Usuario> usuarios;
