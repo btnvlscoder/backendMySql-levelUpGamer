@@ -10,8 +10,10 @@ import bcorona_ftoloza.backendMySql_levelUpGamer.dto.LoginDTO;
 import bcorona_ftoloza.backendMySql_levelUpGamer.dto.UsuarioDTO;
 import bcorona_ftoloza.backendMySql_levelUpGamer.dto.UsuarioResponse;
 import bcorona_ftoloza.backendMySql_levelUpGamer.model.Persona;
+import bcorona_ftoloza.backendMySql_levelUpGamer.model.Rol;
 import bcorona_ftoloza.backendMySql_levelUpGamer.model.Usuario;
 import bcorona_ftoloza.backendMySql_levelUpGamer.repository.PersonaRepository;
+import bcorona_ftoloza.backendMySql_levelUpGamer.repository.RolRepository;
 import bcorona_ftoloza.backendMySql_levelUpGamer.repository.UsuarioRepository;
 
 @Service
@@ -20,6 +22,8 @@ public class UsuarioService {
     private PersonaRepository personaRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private RolRepository rolRepository;
 
     //dto
     public ResponseEntity<?> agregarUsuario(UsuarioDTO dto) {
@@ -31,30 +35,47 @@ public class UsuarioService {
             return ResponseEntity.ok(uResponse);
         }
 
-        if(personaRepository.existsById(dto.getRut())) {
-            uResponse.setEstado("ERROR");
-            uResponse.setMensaje("El RUT ingresado ya existe.");
-            return ResponseEntity.ok(uResponse);
+        String nombreRolBuscado;
+        if (dto.getEmail().endsWith("@duocuc.cl")) {
+            nombreRolBuscado = "DUOCUC";
+        } else {
+            nombreRolBuscado = "LEVELUPGAMER"; 
         }
 
-        Persona persona= new Persona();
+        Rol rol = rolRepository.findByNombre(nombreRolBuscado);
+        if (rol == null) {
+            uResponse.setEstado("ERROR");
+            uResponse.setMensaje("Error interno: El rol '" + nombreRolBuscado + "' no existe. Contacte al administrador.");
+            return ResponseEntity.status(500).body(uResponse);
+        }
+
+        Persona persona = personaRepository.findByRut(dto.getRut());
         Usuario usuario = new Usuario();
 
-        persona.setRut(dto.getRut());
-        persona.setNombre(dto.getNombre());
-        persona.setApellidoPaterno(dto.getApellidoPaterno());
-        persona.setApellidoMaterno(dto.getApellidoMaterno());
+        if (persona == null) {
+            persona = new Persona();
+            persona.setRut(dto.getRut());
+            persona.setNombre(dto.getNombre());
+            persona.setApellidoPaterno(dto.getApellidoPaterno());
+            persona.setApellidoMaterno(dto.getApellidoMaterno());
+        }else{
+            persona.setNombre(dto.getNombre());
+            persona.setApellidoPaterno(dto.getApellidoPaterno());
+            persona.setApellidoMaterno(dto.getApellidoMaterno());
+        }
 
         personaRepository.save(persona);
         
         usuario.setEmail(dto.getEmail());
         usuario.setPassword(dto.getPassword());
+        usuario.setRol(rol);
         usuario.setPersona(persona);
 
         usuarioRepository.save(usuario);
 
         uResponse.setEstado("OK");
         uResponse.setMensaje("Usuario agregado correctamente");
+        dto.setRol(rol.getNombre());
         uResponse.setUsuarioDTO(dto);
 
         return ResponseEntity.ok(uResponse);
@@ -71,6 +92,7 @@ public class UsuarioService {
             dto.setPassword("**********");
 
             Persona persona = u.getPersona();
+            Rol rol = u.getRol();
             if (persona != null) {
                 dto.setRut(persona.getRut());
                 dto.setNombre(persona.getNombre());
@@ -79,7 +101,9 @@ public class UsuarioService {
             }else{
                 dto.setRut("Usuario sin persona asignado");
             }
-
+            if (rol != null) {
+                dto.setRol(rol.getNombre());
+            }
             listafinal.add(dto);
         }
 
@@ -99,7 +123,9 @@ public class UsuarioService {
             usuarioDTO.setNombre(usuario.getPersona().getNombre());
             usuarioDTO.setApellidoPaterno(usuario.getPersona().getApellidoPaterno());
             usuarioDTO.setApellidoMaterno(usuario.getPersona().getApellidoMaterno());
-        
+            if (usuario.getRol() != null) {
+            usuarioDTO.setNombre(usuario.getRol().getNombre());
+            }
             return usuarioDTO;
         } else {
             return null;

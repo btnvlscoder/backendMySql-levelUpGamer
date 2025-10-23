@@ -9,7 +9,7 @@ public class Util {
     private static final String CARACTERES="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom RANDOM=new SecureRandom();
 
-    public String generarID(){
+    public static String generarID(){
         StringBuilder sb=new StringBuilder(24);
 
         for(int x=0; x<24; x++){
