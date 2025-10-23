@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "usuarios")
 public class Usuario {
     @Id
-    private String id;
     private String email;
     private String password;
     @JsonFormat(pattern="dd-MM-yyyy 00:00:00")
@@ -33,14 +32,17 @@ public class Usuario {
     private Boolean activo; //  ---> activo o inactivo
 
     @ManyToOne
-    @JoinColumn(name = "persona_id")
-    private Persona persona;
+    @JoinColumn
+        (name = "persona_rut")
+        private Persona persona;
     @ManyToOne
-    @JoinColumn(name = "rol_id")
-    private Rol rol;
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<FormularioContacto> formulariosContacto;
+    @JoinColumn
+        (name = "rol_id")
+        private Rol rol;
+    @OneToMany
+        (mappedBy = "usuario", cascade = CascadeType.ALL)
+        @JsonIgnore
+        private List<FormularioContacto> formulariosContacto;
     @ManyToOne
     @JoinColumn(name = "direccion_id") 
     private Direccion direccion;

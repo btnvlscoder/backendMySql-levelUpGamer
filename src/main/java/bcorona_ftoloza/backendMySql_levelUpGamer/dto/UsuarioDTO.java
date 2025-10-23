@@ -1,7 +1,5 @@
 package bcorona_ftoloza.backendMySql_levelUpGamer.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsuarioDTO {
-    private Integer id;
     private String email;
     private String password;
-    private LocalDate fechaRegistro;
-    private Boolean activo; //  ---> activo o inactivo
+    private String rut;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String telefono;
 }

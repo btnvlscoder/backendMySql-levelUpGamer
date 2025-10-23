@@ -7,23 +7,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import bcorona_ftoloza.backendMySql_levelUpGamer.dto.UsuarioDTO;
 import bcorona_ftoloza.backendMySql_levelUpGamer.model.Usuario;
 import bcorona_ftoloza.backendMySql_levelUpGamer.service.UsuarioService;
-
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/usuario")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
-    @GetMapping("/listar")
+
+    @GetMapping
     public List<Usuario> listarUsuarios() {
-        return usuarioService.listarUsuario();
+        return usuarioService.listar();
     }
-    @PostMapping("/agregar")
-    public void agregarUsuario(@RequestBody Usuario usuario) {
-        usuarioService.agregarUsuario(usuario);
+
+    @PostMapping
+    public void agregarUsuario(@RequestBody UsuarioDTO dto) {
+        usuarioService.agregarUsuario(dto);
     }
+
+    
 }

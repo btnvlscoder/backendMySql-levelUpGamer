@@ -13,15 +13,15 @@ import bcorona_ftoloza.backendMySql_levelUpGamer.service.RegionService;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-@RequestMapping("/regiones")
+@RequestMapping("/region")
 public class RegionController {
     @Autowired
     private RegionService regionService;
-    @GetMapping("/listar")
+    @GetMapping
     public List<Region> listarRegiones() {
         return regionService.listarRegion();
     }
-    @PostMapping("/agregar")
+    @PostMapping
     public void agregarRegion(@RequestBody Region region) {
         regionService.agregarRegion(region);
     }
