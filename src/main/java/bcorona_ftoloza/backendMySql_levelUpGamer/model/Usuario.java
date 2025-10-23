@@ -33,16 +33,16 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn
-        (name = "persona_rut")
-        private Persona persona;
+    (name = "persona_rut")
+    private Persona persona;
     @ManyToOne
     @JoinColumn
-        (name = "rol_id")
-        private Rol rol;
+    (name = "rol_id")
+    private Rol rol;
     @OneToMany
-        (mappedBy = "usuario", cascade = CascadeType.ALL)
-        @JsonIgnore
-        private List<FormularioContacto> formulariosContacto;
+    (mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FormularioContacto> formulariosContacto;
     @ManyToOne
     @JoinColumn(name = "direccion_id") 
     private Direccion direccion;
