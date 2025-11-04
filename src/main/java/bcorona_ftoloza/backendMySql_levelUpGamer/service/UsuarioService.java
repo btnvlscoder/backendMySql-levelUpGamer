@@ -124,7 +124,7 @@ public class UsuarioService {
             usuarioDTO.setApellidoPaterno(usuario.getPersona().getApellidoPaterno());
             usuarioDTO.setApellidoMaterno(usuario.getPersona().getApellidoMaterno());
             if (usuario.getRol() != null) {
-            usuarioDTO.setNombre(usuario.getRol().getNombre());
+            	usuarioDTO.setRol(usuario.getRol().getNombre());
             }
             return usuarioDTO;
         } else {
