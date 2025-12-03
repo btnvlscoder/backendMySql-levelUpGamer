@@ -26,8 +26,7 @@ public class BackendMySqlLevelUpGamerApplication {
     private void ensureRoleExists(RolRepository rolRepository, String nombre) {
         Rol existing = rolRepository.findByNombre(nombre);
         if (existing == null) {
-            Rol rol = new Rol();
-            rol.setNombre(nombre);
+            Rol rol = new Rol(null, nombre, null);
             rolRepository.save(rol);
         }
     }
