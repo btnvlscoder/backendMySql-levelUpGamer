@@ -24,6 +24,7 @@ public class Persona {
     private String fechaNacimiento;
 
     @OneToMany(mappedBy = "persona")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Usuario> usuarios;
 
 }

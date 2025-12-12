@@ -43,9 +43,6 @@ public class Usuario {
     (mappedBy = "usuario", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<FormularioContacto> formulariosContacto;
-    @ManyToOne
-    @JoinColumn(name = "direccion_id") 
-    private Direccion direccion;
     
 
     @PrePersist

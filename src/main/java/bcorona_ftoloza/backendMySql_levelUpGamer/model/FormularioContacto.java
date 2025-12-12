@@ -27,5 +27,6 @@ public class FormularioContacto {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Usuario usuario;
 }
